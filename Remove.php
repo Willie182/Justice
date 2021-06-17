@@ -20,7 +20,7 @@ if ($_POST["action"] == "Get" ){
               "First_Name" : "'.$row['FName'].'", 
               "Last_Name" : "'.$row['LName'].'", 
               "Phone" : "'.$row['Phone'].'", 
-              "Aletnate_Phone" : "'.$row['APhone'].'", 
+              "Alternate_Phone" : "'.$row['APhone'].'", 
               "Email" : "'.$row['Email'].'"},';
         
   }
