@@ -10,7 +10,7 @@ html, body{
 .navbar {
   overflow: hidden;
   background-color: #fff; 
-  width: 50%;
+  justify-content: 0;
 }
 
 .navbar span{
