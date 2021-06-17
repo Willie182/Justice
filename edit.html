@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" conent="width=device-width, initial-scale=1">
+		<title>Justice Service</title>
+		<link rel = "icon" href = "css/Img/download.png" type = "image/x-icon">
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<link rel = "stylesheet" type="text/css" href="css/home.css" />
+		<link rel = "stylesheet" type="text/css" href="css/insert.css" />
+		<link rel = "stylesheet" type="text/css" href="css/update.css" />
+
+		<script type="text/javascript">
+			function SelectClients(){
+				$.ajax({
+
+					url : 'http://localhost:1234/testphp/GetEdit.php',
+					type : 'POST',
+					data: {'action' : 'Select'},
+					success : function (resultstring) {
+						const result = JSON.parse(resultstring);
+						var x = document.getElementById("ClientSelect");
+						var option = document.createElement("option");
+							option.text = "";
+							option.value = 0;
+							x.add(option);
+						for (var i = 0; i < result.length; i++) {
+							console.log(result[i].First_Name);
+							var option = document.createElement("option");
+							option.text = result[i].First_Name + " " + result[i].Last_Name;
+							option.value = result[i].ID;
+							x.add(option);
+						}
+					}
+				});
+			}
+
+			function GetClients(){
+				var id = document.getElementById("ClientSelect").value;
+				$.ajax({
+
+					url : 'http://localhost:1234/testphp/GetEdit.php',
+					type : 'POST',
+					data: {'action' : 'GetClient', 'ID' : id},
+					success : function (resultstring) {
+						console.log(resultstring);
+						const result = JSON.parse(resultstring);
+						console.log(result);
+						document.getElementById("fname").value = result[0].First_Name;
+						document.getElementById("lname").value = result[0].Last_Name;
+						document.getElementById("phone").value = result[0].Phone;
+						document.getElementById("aphone").value = result[0].Aletnate_Phone;
+						document.getElementById("email").value = result[0].Email;
+
+					}
+				});
+			}
+
+			function EditClient(){
+				var id = document.getElementById("ClientSelect").value;
+				var fname = document.getElementById("fname").value;
+				var lname = document.getElementById("lname").value;
+				var phone = document.getElementById("phone").value;
+				var aphone = document.getElementById("aphone").value;
+				var email = document.getElementById("email").value;
+				var err = "F";
+				if (email == ""){
+					ShowMsg("Please add a email");
+					err = "T";
+				}
+				if (phone == ""){
+					ShowMsg("Please add a phone number");
+					err = "T";
+				}
+				if (lname == ""){
+					ShowMsg("Please add last name");
+					err = "T";
+				}
+				if (fname == ""){
+					ShowMsg("Please add first name");
+					err = "T";
+				}
+				if (id == 0){
+					ShowMsg("Please select a Client");
+					err = "T";
+				}
+
+				if (err == "F"){
+					$.ajax({
+
+						url : 'http://localhost:1234/testphp/GetEdit.php',
+						type : 'POST',
+						data: {'action' : 'Update', 'ID' : id, 'fname' : fname, 'lname' : lname, 'phone' : phone, 'aphone' : aphone, 'email' : email},
+						success : function (result) {
+							ShowMsg(result);
+							ClearSelect();
+							document.getElementById("fname").value = "";
+							document.getElementById("lname").value = "";
+							document.getElementById("phone").value = "";
+							document.getElementById("aphone").value = "";
+							document.getElementById("email").value = "";
+							
+						}
+					});
+				}
+		}
+
+		function ClearSelect(){
+			var select = document.getElementById("ClientSelect");
+			var length = select.options.length;
+			for (i = length-1; i >= 0; i--) {
+			select.options[i] = null;
+			}
+			SelectClients();
+		}
+		
+
+		function ShowMsg(msg){
+			var x = document.getElementById("snackbar");
+						x.innerHTML = msg;
+  						x.className = "show";
+						setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+		}
+		</script> 
+		 
+	</head>
+	<body onload="SelectClients()">
+			<div class="navbar">
+				<span><img src = "css/Img/download.png" style = "width:30px;height:30px;"></span>
+				<a href="index.html">View</a>
+				<a href="insert.html">Add Client</a>
+				<a href="edit.html"><b>Update Client</b></a>
+				<a href="remove.html">Delete Client</a>
+            </div>
+			<h4 style="margin-left: 20px; margin-top: 10px;">Update Client</h4>
+
+			<select id = "ClientSelect" class = "SelectC" onchange="GetClients()">
+			  </select>
+
+			<div class="row" style="margin-left: 10px; margin-top: 10px; width: 50%;">
+
+				<div class="col-sm-6">
+					<div class="panel panel-primary">
+						<div class="panel-body">
+							<div class="form-group">
+								<label>First Name</label>
+								<input type="text" id="fname" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label>Phone</label>
+								<input type="text" id="phone" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label for="url">Email</label>
+								<input type="email" id="email" class="form-control" />
+							</div>
+							<button type="button" id="updateButton" class="btn btn-primary" onclick="EditClient();">
+								Update
+							</button>
+						</div>
+						
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label>Last Name</label>
+								<input type="text" id="lname" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label>Alternate Phone</label>
+								<input type="text" id="aphone" class="form-control" />
+							</div>
+						</div>
+						
+					</div>
+				</div>
+
+
+
+
+
+			</div>
+
+			<div id="snackbar"></div>
+
+	</body>
+</html>
+
