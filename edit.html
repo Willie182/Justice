@@ -18,7 +18,7 @@
 			function SelectClients(){
 				$.ajax({
 
-					url : 'https://willie182.github.io/Justice/GetEdit.php',
+					url : 'https://app-381fc3b7-a808-4a36-8c32-727c12963f8b.cleverapps.io/GetEdit.php',
 					type : 'POST',
 					data: {'action' : 'Select'},
 					success : function (resultstring) {
@@ -43,7 +43,7 @@
 				var id = document.getElementById("ClientSelect").value;
 				$.ajax({
 
-					url : 'https://willie182.github.io/Justice/GetEdit.php',
+					url : 'https://app-381fc3b7-a808-4a36-8c32-727c12963f8b.cleverapps.io/GetEdit.php',
 					type : 'POST',
 					data: {'action' : 'GetClient', 'ID' : id},
 					success : function (resultstring) {
@@ -92,7 +92,7 @@
 				if (err == "F"){
 					$.ajax({
 
-						url : 'https://willie182.github.io/Justice/GetEdit.php',
+						url : 'https://app-381fc3b7-a808-4a36-8c32-727c12963f8b.cleverapps.io/GetEdit.php',
 						type : 'POST',
 						data: {'action' : 'Update', 'ID' : id, 'fname' : fname, 'lname' : lname, 'phone' : phone, 'aphone' : aphone, 'email' : email},
 						success : function (result) {
