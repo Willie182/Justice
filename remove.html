@@ -16,7 +16,7 @@
 			function GetClients(){
 				$.ajax({
 
-					url : 'https://app-381fc3b7-a808-4a36-8c32-727c12963f8b.cleverapps.io/Remove.php',
+					url : 'http://justice.service.cleverapps.io/Remove.php',
 						type : 'POST',
 						data: {'action' : 'Get'},
 					success : function (resultstring) {
@@ -107,7 +107,7 @@
 			if (result) {
 			$.ajax({
 
-				url : 'https://app-381fc3b7-a808-4a36-8c32-727c12963f8b.cleverapps.io/Remove.php',
+				url : 'http://justice.service.cleverapps.io/Remove.php',
 				type : 'POST',
 				data: {'action' : 'Delete', 'ID' : id},
 				success : function (result) {
